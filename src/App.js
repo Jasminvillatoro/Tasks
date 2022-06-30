@@ -1,26 +1,35 @@
-import './App.css';
 import { useState } from 'react';
 import List from './components/List';
 import { v4 as uuidv4 } from 'uuid';
 
-const taskList = [];
-
 function App() {
-  const [task, setTask] = useState(taskList);
+  const [task, setTask] = useState([]);
   const [inputText, setInputText] = useState('');
 
   const handleChange = (e) => {
     setInputText(e.target.value);
-    //  console.log('value is:', e.target.value);
   };
 
   function handleAdd() {
-    const newTask = task.concat({ taskval: inputText, id: uuidv4() });
-
+    const newTask = task.concat({
+      taskval: inputText,
+      id: uuidv4(),
+    });
     setTask(newTask);
 
     setInputText('');
   }
+
+  function handleRemove(id) {
+    // remove item
+    const removeItem = task.filter((item) => item.id !== id);
+    setTask(removeItem);
+  }
+
+  function handleEdit(id) {
+    console.log('edit mode activated');
+  }
+
   return (
     <div className="pt-10 flex flex-col items-center bg-red-200 h-screen ">
       <h1 className="text-3xl font-bold">Task</h1>
@@ -35,7 +44,11 @@ function App() {
           Add
         </button>
       </div>
-      <List taskdata={task} />
+      <List
+        taskdata={task}
+        handleRemove={handleRemove}
+        handleEdit={handleEdit}
+      />
     </div>
   );
 }
