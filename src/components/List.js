@@ -4,20 +4,16 @@ export default function List({ taskdata, handleRemove, handleEdit }) {
   return (
     <ul className="mt-6 mr-3">
       {taskdata.map((item) => (
-        <li key={item.id} className="li">
+        <li key={item.id} className="li flex justify-between items-center ">
           {item.taskval}
-          <button
-            type="button"
-            onClick={() => handleRemove(item.id)}
-            className="btn">
-            <TiDelete />
-          </button>
-          <button
-            type="button"
-            onClick={() => handleEdit(item.id)}
-            className="btn">
-            <AiFillEdit />
-          </button>
+          <div className="flex items-center">
+            <button type="button" onClick={() => handleRemove(item.id)}>
+              <TiDelete color="red" size="1.5rem" />
+            </button>
+            <button type="button" onClick={() => handleEdit(item.id)}>
+              <AiFillEdit color="#C2B280" size="1.5rem" />
+            </button>
+          </div>
         </li>
       ))}
     </ul>
