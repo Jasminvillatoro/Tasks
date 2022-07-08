@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [task, setTask] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [editTask, setEditTask] = useState(false);
 
   const handleChange = (e) => {
     setInputText(e.target.value);
@@ -12,11 +13,12 @@ function App() {
 
   function handleAdd() {
     const newTask = task.concat({
-      taskval: inputText,
       id: uuidv4(),
+      taskval: inputText,
+      taskCompletion: editTask,
     });
-    setTask(newTask);
 
+    setTask(newTask);
     setInputText('');
   }
 
@@ -26,8 +28,9 @@ function App() {
     setTask(removeItem);
   }
 
-  function handleEdit(id) {
-    console.log('edit mode activated');
+  function handleEdit() {
+    console.log('edit clicked');
+    setEditTask((preveditTask) => !preveditTask);
   }
 
   return (
