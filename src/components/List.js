@@ -10,8 +10,8 @@ export default function List({ taskdata, handleRemove, handleEdit }) {
             <button type="button" onClick={() => handleRemove(item.id)}>
               <TiDelete color="red" size="1.5rem" />
             </button>
-            <button type="button" onClick={() => handleEdit(item.id)}>
-              <AiFillEdit color="#C2B280" size="1.5rem" />
+            <button type="button" onClick={handleEdit}>
+              <AiFillEdit size="1.5rem" />
             </button>
           </div>
         </li>
