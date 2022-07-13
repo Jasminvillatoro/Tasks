@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [task, setTask] = useState([]);
   const [inputText, setInputText] = useState('');
-  const [editTask, setEditTask] = useState(false);
+  const [taskEditing, setTaskEditing] = useState(null);
+  const [editingText, setEditingText] = useState('');
 
   const handleChange = (e) => {
     setInputText(e.target.value);
@@ -15,7 +16,7 @@ function App() {
     const newTask = task.concat({
       id: uuidv4(),
       taskval: inputText,
-      taskCompletion: editTask,
+      taskCompletion: false,
     });
 
     setTask(newTask);
@@ -28,18 +29,24 @@ function App() {
     setTask(removeItem);
   }
 
-  function handleEdit() {
-    console.log('edit clicked');
-    setEditTask((preveditTask) => !preveditTask);
+  function submitEdits(id) {
+    const updatedTasks = [...task].map((task) => {
+      if (task.id === id) {
+        task.taskval = editingText;
+      }
+      return task;
+    });
+    setTask(updatedTasks);
+    setTaskEditing(null);
   }
 
   return (
-    <div className="pt-10 flex flex-col items-center bg-red-200 h-screen ">
+    <div className=" pt-10 flex flex-col items-center justify-start h-screen bg-red-200 overflow-scroll">
       <h1 className="text-3xl font-bold">Task</h1>
-      <div className="flex">
+      <div className="flex   ">
         <input
           type="text"
-          className=" w-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
+          className=" w-60 ml-8 shadow appearance-none border rounded py-2 px-3   text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
           value={inputText}
           onChange={handleChange}
         />
@@ -50,7 +57,10 @@ function App() {
       <List
         taskdata={task}
         handleRemove={handleRemove}
-        handleEdit={handleEdit}
+        taskEditing={taskEditing}
+        setTaskEditing={setTaskEditing}
+        setEditingText={setEditingText}
+        submitEdits={submitEdits}
       />
     </div>
   );
